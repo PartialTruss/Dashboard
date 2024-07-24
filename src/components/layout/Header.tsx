@@ -1,5 +1,5 @@
 import React from "react";
-import CurrentUser from "./current-user";
+import { CurrentUser } from "./current-user";
 import { Layout, Space } from "antd";
 
 const Header = () => {

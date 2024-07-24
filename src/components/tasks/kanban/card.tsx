@@ -1,4 +1,4 @@
-import CustomAvatar from "@/components/custom-avatar";
+import { CustomAvatar } from "@/components/custom-avatar";
 import { Text } from "@/components/text";
 import { TextIcon } from "@/components/text-icon";
 import { User } from "@/graphql/schema.types";

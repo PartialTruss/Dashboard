@@ -15,7 +15,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Input, Space, Table } from "antd";
 
 import { Text } from "@/components";
-import CustomAvatar from "@/components/custom-avatar";
+import { CustomAvatar } from "@/components/custom-avatar";
 import type { CompaniesListQuery } from "@/graphql/types";
 import { currencyNumber } from "@/utilities";
 import { COMPANIES_LIST_QUERY } from "@/graphql/queries";

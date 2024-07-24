@@ -9,7 +9,7 @@ import { getNameInitials } from "@/utilities/get-name-initials";
 import { UPDATE_USER_MUTATION } from "@/graphql/mutation";
 
 import { Text } from "../text";
-import CustomAvatar from "../custom-avatar";
+import {CustomAvatar} from "../custom-avatar";
 
 import {
   UpdateUserMutation,

@@ -9,7 +9,7 @@ import {
   DASHBOARD_LATEST_ACTIVITIES_DEALS_QUERY,
 } from "@/graphql/queries";
 import dayjs from "dayjs";
-import CustomAvatar from "../custom-avatar";
+import { CustomAvatar } from "../custom-avatar";
 import { Space } from "antd/lib";
 
 const LatestActivities = () => {

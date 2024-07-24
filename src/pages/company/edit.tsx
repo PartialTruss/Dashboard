@@ -1,4 +1,4 @@
-import CustomAvatar from "@/components/custom-avatar";
+import { CustomAvatar } from "@/components/custom-avatar";
 import { UPDATE_COMPANY_MUTATION } from "@/graphql/mutation";
 import { getNameInitials } from "@/utilities";
 import { Edit, useForm } from "@refinedev/antd";
