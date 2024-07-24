@@ -1,5 +1,5 @@
 import React from "react";
-import { CompanyList } from "./list";
+import { CompanyListPage } from "./list";
 import { Form, Input, Modal, Select } from "antd";
 import { useModalForm } from "@refinedev/antd";
 import { useGo } from "@refinedev/core";
@@ -45,7 +45,7 @@ const Create = () => {
 
   return (
     <div>
-      <CompanyList>
+      <CompanyListPage>
         <Modal
           {...modalProps}
           mask={true}
@@ -84,7 +84,7 @@ const Create = () => {
             </Form.Item>
           </Form>
         </Modal>
-      </CompanyList>
+      </CompanyListPage>
     </div>
   );
 };

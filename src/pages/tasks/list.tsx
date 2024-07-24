@@ -6,17 +6,20 @@ import {
 import KanbanColumn from "@/components/tasks/kanban/column";
 import KanbanItem from "@/components/tasks/kanban/item";
 import { TASK_STAGES_QUERY, TASKS_QUERY } from "@/graphql/queries";
-import { TaskStage } from "@/graphql/schema.types";
-import { TasksQuery } from "@/graphql/types";
+// import { TaskStage } from "@/graphql/schema.types";
+import { TasksQuery, TaskStagesQuery } from "@/graphql/types";
 import { useList, useNavigation, useUpdate } from "@refinedev/core";
 import { GetFieldsFromList } from "@refinedev/nestjs-query";
 import React from "react";
 import { useMemo } from "react";
-import ProjectCard, { ProjectCardMemo } from "@/components/tasks/kanban/card";
+import { ProjectCardMemo } from "@/components/tasks/kanban/card";
 import { KanbanAddCardButton } from "@/components/tasks/kanban/add-card-button";
 // import Item from "antd/lib/list/Item";
 import { DragEndEvent } from "@dnd-kit/core";
 import { UPDATE_TASK_STAGE_MUTATION } from "@/graphql/mutation";
+
+type Task = GetFieldsFromList<TasksQuery>;
+type TaskStage = GetFieldsFromList<TaskStagesQuery> & { tasks: Task[] };
 
 const TasksList = ({ children }: React.PropsWithChildren) => {
   const { replace } = useNavigation();
