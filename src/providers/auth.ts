@@ -1,15 +1,21 @@
-import { AuthBindings } from "@refinedev/core";
+import type { AuthProvider } from "@refinedev/core";
+
+import type { User } from "@/graphql/schema.types";
 
 import { API_URL, dataProvider } from "./data";
 
-export const authCredits = {
-    email: "amirhoseinfalahan@outlook.com",
-    password: "BruceW@yne",
+/**
+ * For demo purposes and to make it easier to test the app, you can use the following credentials:
+ */
+export const authCredentials = {
+    email: "michael.scott@dundermifflin.com",
+    password: "demodemo",
 };
 
-export const authProvider: AuthBindings = {
+export const authProvider: AuthProvider = {
     login: async ({ email }) => {
         try {
+            console.log("Attempting to log in with email:", email);
             const { data } = await dataProvider.custom({
                 url: API_URL,
                 method: "post",
@@ -17,15 +23,19 @@ export const authProvider: AuthBindings = {
                 meta: {
                     variables: { email },
                     rawQuery: `
-                mutation Login($email:String!){
-                    login(loginInput:{email:$email}){
-                        accessToken
+                mutation Login($email: String!) {
+                    login(loginInput: {
+                      email: $email
+                    }) {
+                      accessToken,
                     }
-                }
-                    `,
+                  }
+                `,
                 },
             });
-            localStorage.setItem("access_token", data.login.access_token);
+
+            console.log("Login successful, received access token:", data.login.accessToken);
+            localStorage.setItem("access_token", data.login.accessToken);
 
             return {
                 success: true,
@@ -33,17 +43,21 @@ export const authProvider: AuthBindings = {
             };
         } catch (e) {
             const error = e as Error;
+            console.error("Login failed:", error);
+
             return {
                 success: false,
                 error: {
-                    message: "message" in error ? error.message : "Login failed!",
+                    message: "message" in error ? error.message : "Login failed",
                     name: "name" in error ? error.name : "Invalid email or password",
                 },
             };
         }
     },
+
     logout: async () => {
-        localStorage.removeItem("access_token")
+        localStorage.removeItem("access_token");
+
         return {
             success: true,
             redirectTo: "/login",
@@ -53,9 +67,9 @@ export const authProvider: AuthBindings = {
         if (error.statusCode === "UNAUTHENTICATED") {
             return {
                 logout: true,
-                ...error,
             };
         }
+
         return { error };
     },
     check: async () => {
@@ -66,18 +80,18 @@ export const authProvider: AuthBindings = {
                 headers: {},
                 meta: {
                     rawQuery: `
-                        query Me{
-                    me{
-                    name
-                    }
-                }
-                    `,
+                    query Me {
+                        me {
+                          name
+                        }
+                      }
+                `,
                 },
             });
 
             return {
                 authenticated: true,
-                redirectedTo: "/",
+                redirectTo: "/",
             };
         } catch (error) {
             return {
@@ -86,37 +100,39 @@ export const authProvider: AuthBindings = {
             };
         }
     },
-
     getIdentity: async () => {
         const accessToken = localStorage.getItem("access_token");
+
         try {
-            const { data } = await dataProvider.custom<{ me: any }>({
+            const { data } = await dataProvider.custom<{ me: User }>({
                 url: API_URL,
                 method: "post",
-                headers: accessToken ? {
-                    Authorization: `Bearer ${accessToken}`,
-                }
+                headers: accessToken
+                    ? {
+                        Authorization: `Bearer ${accessToken}`,
+                    }
                     : {},
                 meta: {
                     rawQuery: `
-                    query Me{
-                    me{
-                    id
-                    name
-                    email
-                    phone
-                    jobTitle
-                    timeZone
-                    avatarUrl
-                    }
-                    }
-                    `,
+                    query Me {
+                        me {
+                            id,
+                            name,
+                            email,
+                            phone,
+                            jobTitle,
+                            timezone
+                            avatarUrl
+                        }
+                      }
+                `,
                 },
             });
+
             return data.me;
         } catch (error) {
             return undefined;
         }
     },
-
 };
+
