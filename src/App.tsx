@@ -22,6 +22,7 @@ import EditPage from "./pages/company/edit";
 import TasksList from "./pages/tasks/list";
 import TasksCreatPage from "./pages/tasks/create";
 import TasksEditPage from "./pages/tasks/edit";
+import NewsPage from "./pages/news";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
                     <Route path="new" element={<TasksCreatPage />} />
                     <Route path="edit/:id" element={<TasksEditPage />} />
                   </Route>
+                  <Route path="/news" element={<NewsPage />} />
                 </Route>
               </Routes>
               <RefineKbar />

@@ -1,8 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import { CurrentUser } from "./current-user";
-import { Layout, Space } from "antd";
+import { Layout, Space, Button } from "antd";
+import { FaRegMoon, FaRegSun } from "react-icons/fa";
 
-const Header = () => {
+interface HeaderProps {
+  theme: "light" | "dark";
+  setTheme: (theme: "light" | "dark") => void;
+}
+
+const Header: FC<HeaderProps> = (props) => {
   const headerStyles: React.CSSProperties = {
     background: "#fff",
     display: "flex",
@@ -18,6 +24,12 @@ const Header = () => {
     <div>
       <Layout.Header style={headerStyles}>
         <Space align="center" size="middle">
+          <Button
+            onClick={() => {
+              props.setTheme(props.theme === "light" ? "dark" : "light");
+            }}
+            icon={props.theme === "light" ? <FaRegMoon /> : <FaRegSun />}
+          />
           <CurrentUser />
         </Space>
       </Layout.Header>
